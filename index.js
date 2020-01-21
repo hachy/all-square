@@ -1,20 +1,45 @@
-// prettier-ignore
 const data = [
-  [[1, 1, 2], [1, 2, 1], [1, 1, 2], [1, 2, 2]],
-  [[1, 1, 1, 2], [1, 2, 0, 1], [1, 1, 2, 0], [1, 2, 2, 2]]
+  {
+    current: [2, 1],
+    stage: [[1, 1, 2], [1, 2, 1], [1, 1, 2], [1, 2, 2]],
+  },
+  {
+    current: [1, 1],
+    stage: [[1, 1, 1, 2], [1, 2, 0, 1], [1, 1, 2, 0], [1, 2, 2, 2]],
+  },
 ];
 
-const stage = data[0];
-const current = [2, 1];
-
 const board = [];
-const xLen = stage.length;
-const yLen = stage[0].length;
-const xMax = xLen - 1;
-const yMax = yLen - 1;
+let stage;
+let current;
+let xLen;
+let yLe;
+let xMax;
+let yMax;
+let prevKey;
 let block;
 let arrow;
-let prevKey;
+
+const start = i => {
+  stage = data[i].stage;
+  current = data[i].current.slice();
+  xLen = stage.length;
+  yLen = stage[0].length;
+  xMax = xLen - 1;
+  yMax = yLen - 1;
+  prevKey = null;
+  createBoard();
+  showBoard();
+};
+
+const createBoard = () => {
+  for (let i = 0; i < xLen; i++) {
+    board[i] = [];
+    for (let j = 0; j < yLen; j++) {
+      board[i][j] = stage[i][j];
+    }
+  }
+};
 
 const showBoard = () => {
   const b = document.getElementById('board');
@@ -54,12 +79,13 @@ window.onload = function() {
   block = [document.getElementsByClassName('none')[0], document.getElementsByClassName('square')[0], document.getElementsByClassName('circle')[0]];
   arrow = [document.getElementsByClassName('top')[0], document.getElementsByClassName('right')[0], document.getElementsByClassName('bottom')[0], document.getElementsByClassName('left')[0]];
 
-  for (let i = 0; i < xLen; i++) {
-    board[i] = [];
-    for (let j = 0; j < yLen; j++) {
-      board[i][j] = stage[i][j];
-    }
+  const btns = document.getElementsByClassName('btn');
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', start.bind(this, i));
   }
+
+  start(0);
+  createBoard();
   showBoard();
 
   document.addEventListener('keydown', e => {
