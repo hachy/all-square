@@ -1,17 +1,21 @@
 const data = [
   {
-    current: [2, 1],
     stage: [[1, 1, 2], [1, 2, 1], [1, 1, 2], [1, 2, 2]],
+    current: [2, 1],
+    move: 11,
   },
   {
-    current: [1, 1],
     stage: [[1, 1, 1, 2], [1, 2, 0, 1], [1, 1, 2, 0], [1, 2, 2, 2]],
+    current: [1, 1],
+    move: 20,
   },
 ];
 
 const board = [];
 let stage;
 let current;
+let moveTxt;
+let move;
 let xLen;
 let yLe;
 let xMax;
@@ -21,8 +25,13 @@ let block;
 let arrow;
 
 const start = i => {
+  const s = document.getElementById('stage');
+  moveTxt = document.getElementById('move');
+  s.textContent = `${i + 1}`;
   stage = data[i].stage;
   current = data[i].current.slice();
+  move = data[i].move;
+  moveTxt.textContent = move;
   xLen = stage.length;
   yLen = stage[0].length;
   xMax = xLen - 1;
@@ -75,6 +84,15 @@ const showBoard = () => {
   }
 };
 
+const countMove = () => {
+  if (move <= 0) {
+    return;
+  } else {
+    move--;
+  }
+  moveTxt.textContent = move;
+};
+
 window.onload = function() {
   block = [document.getElementsByClassName('none')[0], document.getElementsByClassName('square')[0], document.getElementsByClassName('circle')[0]];
   arrow = [document.getElementsByClassName('top')[0], document.getElementsByClassName('right')[0], document.getElementsByClassName('bottom')[0], document.getElementsByClassName('left')[0]];
@@ -97,18 +115,22 @@ window.onload = function() {
       prevKey = 40;
       current[0]--;
       board[cx - 1][cy] = 3 - board[cx - 1][cy];
+      countMove();
     } else if (k === 39 && cy < yMax && prevKey != 39 && board[cx][cy + 1] != 0) {
       prevKey = 37;
       current[1]++;
       board[cx][cy + 1] = 3 - board[cx][cy + 1];
+      countMove();
     } else if (k === 40 && cx < xMax && prevKey != 40 && board[cx + 1][cy] != 0) {
       prevKey = 38;
       current[0]++;
       board[cx + 1][cy] = 3 - board[cx + 1][cy];
+      countMove();
     } else if (k === 37 && cy > 0 && prevKey != 37 && board[cx][cy - 1] != 0) {
       prevKey = 39;
       current[1]--;
       board[cx][cy - 1] = 3 - board[cx][cy - 1];
+      countMove();
     }
     showBoard();
   });

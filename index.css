@@ -34,6 +34,22 @@ h1 {
   }
 }
 
+.info {
+  min-width: 100px;
+  margin: 10px 0 0 10px;
+}
+
+.info > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#stage,
+#move {
+  margin-left: 5px;
+}
+
 .nav {
   margin: 10px;
 }
