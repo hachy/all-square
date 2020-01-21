@@ -23,10 +23,13 @@ let yMax;
 let prevKey;
 let block;
 let arrow;
+let modal;
+let gameover;
 
 const start = i => {
   const s = document.getElementById('stage');
   moveTxt = document.getElementById('move');
+  gameover = false;
   s.textContent = `${i + 1}`;
   stage = data[i].stage;
   current = data[i].current.slice();
@@ -86,6 +89,8 @@ const showBoard = () => {
 
 const countMove = () => {
   if (move <= 0) {
+    modal.classList.add('show');
+    gameover = true;
     return;
   } else {
     move--;
@@ -96,6 +101,15 @@ const countMove = () => {
 window.onload = function() {
   block = [document.getElementsByClassName('none')[0], document.getElementsByClassName('square')[0], document.getElementsByClassName('circle')[0]];
   arrow = [document.getElementsByClassName('top')[0], document.getElementsByClassName('right')[0], document.getElementsByClassName('bottom')[0], document.getElementsByClassName('left')[0]];
+
+  modal = document.getElementById('modal');
+  const modalBtn = document.getElementById('modal-btn');
+  modalBtn.addEventListener('click', () => {
+    modal.classList.remove('show');
+    start(0);
+    createBoard();
+    showBoard();
+  });
 
   const btns = document.getElementsByClassName('btn');
   for (let i = 0; i < btns.length; i++) {
@@ -110,6 +124,11 @@ window.onload = function() {
     const k = e.keyCode;
     const cx = current[0],
       cy = current[1];
+
+    if (gameover) {
+      e.preventDefault();
+      return;
+    }
 
     if (k === 38 && cx > 0 && prevKey != 38 && board[cx - 1][cy] != 0) {
       prevKey = 40;
