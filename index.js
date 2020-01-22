@@ -47,8 +47,17 @@ const start = i => {
   yMax = yLen - 1;
   prevKey = null;
   blockMax = stage.flat().filter(e => e != 0).length;
+  currentBtn(i);
   createBoard();
   showBoard();
+};
+
+const currentBtn = i => {
+  const btns = document.getElementsByClassName('btn');
+  Array.prototype.forEach.call(btns, e => {
+    e.classList.remove('current');
+  });
+  btns[i].classList.add('current');
 };
 
 const createBoard = () => {

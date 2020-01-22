@@ -68,7 +68,7 @@ h1 {
   font-size: inherit;
   font-family: inherit;
   background: #000;
-  border: 1px solid #fff;
+  border: 1px solid #ddd;
   transition: all 0.3s;
 }
 
@@ -80,6 +80,11 @@ h1 {
 .btn:disabled {
   color: #777;
   border: 1px solid #777;
+}
+
+.btn.current {
+  border: 1px solid #fff;
+  box-shadow: 0px 0px 7px rgba(255, 255, 255, 0.9);
 }
 
 button:not(:disabled),
