@@ -94,9 +94,13 @@ const showBoard = () => {
   }
 
   if (blockMax === board.flat().filter(e => e === 1).length) {
-    start(parseInt(localStorage.getItem('all-square-level')) + 1);
-    createBoard();
-    showBoard();
+    (async () => {
+      gameover = true;
+      await wait(2000);
+      start(parseInt(localStorage.getItem('all-square-level')) + 1);
+      createBoard();
+      showBoard();
+    })();
   }
 };
 
@@ -109,6 +113,10 @@ const countMove = () => {
     move--;
   }
   moveTxt.textContent = move;
+};
+
+const wait = ms => {
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 window.onload = function() {
