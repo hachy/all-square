@@ -47,17 +47,27 @@ const start = i => {
   yMax = yLen - 1;
   prevKey = null;
   blockMax = stage.flat().filter(e => e != 0).length;
-  currentBtn(i);
+  stageBtns(i);
   createBoard();
   showBoard();
 };
 
-const currentBtn = i => {
+const stageBtns = i => {
   const btns = document.getElementsByClassName('btn');
-  Array.prototype.forEach.call(btns, e => {
-    e.classList.remove('current');
+
+  // highlight current btn
+  Array.prototype.forEach.call(btns, (el, idx) => {
+    el.classList.remove('current');
+    // add click listener
+    el.addEventListener('click', start.bind(this, idx));
   });
   btns[i].classList.add('current');
+
+  // btn disabled
+  const l = parseInt(localStorage.getItem('all-square-level-max')) + 1;
+  for (let j = 0; j < l; j++) {
+    btns[j].disabled = false;
+  }
 };
 
 const createBoard = () => {
@@ -139,20 +149,11 @@ window.onload = function() {
     start(localStorage.getItem('all-square-level'));
   });
 
-  const btns = document.getElementsByClassName('btn');
-  for (let i = 0; i < btns.length; i++) {
-    btns[i].addEventListener('click', start.bind(this, i));
-  }
-
   if (!localStorage.getItem('all-square-level-max')) {
     localStorage['all-square-level'] = 0;
     localStorage['all-square-level-max'] = 0;
     start(0);
   } else {
-    const l = parseInt(localStorage.getItem('all-square-level-max')) + 1;
-    for (let i = 0; i < l; i++) {
-      btns[i].disabled = false;
-    }
     start(localStorage.getItem('all-square-level'));
   }
 
