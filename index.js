@@ -25,6 +25,7 @@ let block;
 let arrow;
 let modal;
 let gameover;
+let blockMax;
 
 const start = i => {
   if (i > localStorage.getItem('all-square-level-max')) {
@@ -45,6 +46,7 @@ const start = i => {
   xMax = xLen - 1;
   yMax = yLen - 1;
   prevKey = null;
+  blockMax = stage.flat().filter(e => e != 0).length;
   createBoard();
   showBoard();
 };
@@ -89,6 +91,12 @@ const showBoard = () => {
         }
       }
     }
+  }
+
+  if (blockMax === board.flat().filter(e => e === 1).length) {
+    start(parseInt(localStorage.getItem('all-square-level')) + 1);
+    createBoard();
+    showBoard();
   }
 };
 
