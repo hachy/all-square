@@ -24,19 +24,29 @@ h1 {
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-areas:
+    'info nav'
+    'board-wrapper nav';
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr auto;
+  min-height: 100vh;
 }
 
 @media screen and (max-width: 700px) {
   .container {
-    flex-direction: column;
+    grid-template-areas:
+      'info'
+      'board-wrapper'
+      'nav';
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
   }
 }
 
 .info {
-  min-width: 100px;
-  margin: 10px 0 0 10px;
+  grid-area: info;
+  margin: 10px;
 }
 
 .info > ul {
@@ -51,6 +61,7 @@ h1 {
 }
 
 .nav {
+  grid-area: nav;
   margin: 10px;
 }
 
@@ -90,6 +101,10 @@ h1 {
 button:not(:disabled),
 [type='button']:not(:disabled) {
   cursor: pointer;
+}
+
+#board-wrapper {
+  grid-area: board-wrapper;
 }
 
 #board {
