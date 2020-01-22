@@ -27,10 +27,15 @@ let modal;
 let gameover;
 
 const start = i => {
+  if (i > localStorage.getItem('all-square-level-max')) {
+    localStorage['all-square-level-max'] = i;
+  }
+  localStorage['all-square-level'] = i;
+
   const s = document.getElementById('stage');
   moveTxt = document.getElementById('move');
   gameover = false;
-  s.textContent = `${i + 1}`;
+  s.textContent = `${parseInt(i) + 1}`;
   stage = data[i].stage;
   current = data[i].current.slice();
   move = data[i].move;
@@ -106,7 +111,7 @@ window.onload = function() {
   const modalBtn = document.getElementById('modal-btn');
   modalBtn.addEventListener('click', () => {
     modal.classList.remove('show');
-    start(0);
+    start(localStorage.getItem('all-square-level'));
     createBoard();
     showBoard();
   });
@@ -116,7 +121,17 @@ window.onload = function() {
     btns[i].addEventListener('click', start.bind(this, i));
   }
 
-  start(0);
+  if (!localStorage.getItem('all-square-level-max')) {
+    localStorage['all-square-level'] = 0;
+    localStorage['all-square-level-max'] = 0;
+    start(0);
+  } else {
+    const l = parseInt(localStorage.getItem('all-square-level-max')) + 1;
+    for (let i = 0; i < l; i++) {
+      btns[i].disabled = false;
+    }
+    start(localStorage.getItem('all-square-level'));
+  }
   createBoard();
   showBoard();
 
