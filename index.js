@@ -109,8 +109,6 @@ const showBoard = () => {
       b.classList.add('fadeOut');
       await wait(1300);
       start(parseInt(localStorage.getItem('all-square-level')) + 1);
-      createBoard();
-      showBoard();
     })();
   }
 };
@@ -139,8 +137,6 @@ window.onload = function() {
   modalBtn.addEventListener('click', () => {
     modal.classList.remove('show');
     start(localStorage.getItem('all-square-level'));
-    createBoard();
-    showBoard();
   });
 
   const btns = document.getElementsByClassName('btn');
@@ -159,8 +155,6 @@ window.onload = function() {
     }
     start(localStorage.getItem('all-square-level'));
   }
-  createBoard();
-  showBoard();
 
   document.addEventListener('keydown', e => {
     const k = e.keyCode;
