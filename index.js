@@ -62,6 +62,7 @@ const createBoard = () => {
 
 const showBoard = () => {
   const b = document.getElementById('board');
+  b.classList.remove('fadeOut');
   b.style.width = 70 * yLen + 6 * 2 * yLen + 'px';
   while (b.firstChild) {
     b.removeChild(b.firstChild);
@@ -96,7 +97,8 @@ const showBoard = () => {
   if (blockMax === board.flat().filter(e => e === 1).length) {
     (async () => {
       gameover = true;
-      await wait(2000);
+      b.classList.add('fadeOut');
+      await wait(1300);
       start(parseInt(localStorage.getItem('all-square-level')) + 1);
       createBoard();
       showBoard();

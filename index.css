@@ -94,6 +94,19 @@ button:not(:disabled),
   margin: 100px auto;
 }
 
+#board.fadeOut {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .none {
   position: relative;
   width: 70px;
