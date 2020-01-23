@@ -240,27 +240,13 @@ window.onload = function() {
     }
 
     if (k === 38 && cx > 0 && prevKey != 38 && board[cx - 1][cy] != 0) {
-      prevKey = 40;
-      current[0]--;
-      board[cx - 1][cy] = 3 - board[cx - 1][cy];
-      countMove();
+      flip(cx - 1, cy, 40);
     } else if (k === 39 && cy < yMax && prevKey != 39 && board[cx][cy + 1] != 0) {
-      prevKey = 37;
-      current[1]++;
-      board[cx][cy + 1] = 3 - board[cx][cy + 1];
-      countMove();
+      flip(cx, cy + 1, 37);
     } else if (k === 40 && cx < xMax && prevKey != 40 && board[cx + 1][cy] != 0) {
-      prevKey = 38;
-      current[0]++;
-      board[cx + 1][cy] = 3 - board[cx + 1][cy];
-      countMove();
+      flip(cx + 1, cy, 38);
     } else if (k === 37 && cy > 0 && prevKey != 37 && board[cx][cy - 1] != 0) {
-      prevKey = 39;
-      current[1]--;
-      board[cx][cy - 1] = 3 - board[cx][cy - 1];
-      countMove();
+      flip(cx, cy - 1, 39);
     }
-    showBoard();
-    addFlipEvent();
   });
 };
