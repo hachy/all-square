@@ -49,15 +49,42 @@ h1 {
   margin: 10px;
 }
 
-.info > ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.info-txt {
+  display: inline-block;
+  width: 35px;
+}
+
+.move-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 #stage,
 #move {
-  margin-left: 5px;
+  display: inline-block;
+  min-width: 30px;
+  margin-right: 20px;
+  text-align: right;
+}
+
+.progress {
+  display: flex;
+  width: 200px;
+  height: 8px;
+  overflow: hidden;
+  vertical-align: middle;
+  background-color: #999;
+  border-radius: 50px;
+}
+
+#progress-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #0373fc;
+  transition: width 0.5s linear;
 }
 
 .nav {
@@ -284,7 +311,7 @@ button:not(:disabled),
   width: auto;
   max-width: 400px;
   min-height: calc(100% - 1rem);
-  margin: 0.5rem auto;
+  margin: 0 auto;
   pointer-events: none;
 }
 

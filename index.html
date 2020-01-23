@@ -22,10 +22,13 @@
 
     <div class="container">
       <div class="info">
-        <ul>
-          <li>stage <span id="stage"></span></li>
-          <li>move <span id="move"></span></li>
-        </ul>
+        <div><span class="info-txt">stage</span><span id="stage"></span></div>
+        <div class="move-wrapper">
+          <span class="info-txt">move</span><span id="move"></span>
+          <div class="progress">
+            <div id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
       </div>
 
       <div id="board-wrapper">

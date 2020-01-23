@@ -15,6 +15,7 @@ const board = [];
 let stage;
 let current;
 let moveTxt;
+let moveMax;
 let move;
 let xLen;
 let yLe;
@@ -23,6 +24,7 @@ let yMax;
 let prevKey;
 let block;
 let arrow;
+let progress;
 let modal;
 let gameover;
 let blockMax;
@@ -39,6 +41,7 @@ const start = i => {
   s.textContent = `${parseInt(i) + 1}`;
   stage = data[i].stage;
   current = data[i].current.slice();
+  moveMax = data[i].move;
   move = data[i].move;
   moveTxt.textContent = move;
   xLen = stage.length;
@@ -48,6 +51,7 @@ const start = i => {
   prevKey = null;
   blockMax = stage.flat().filter(e => e != 0).length;
   stageBtns(i);
+  percent();
   createBoard();
   showBoard();
 };
@@ -131,7 +135,14 @@ const countMove = () => {
   } else {
     move--;
   }
+  percent();
   moveTxt.textContent = move;
+};
+
+const percent = () => {
+  let p = Math.floor((move / moveMax) * 100);
+  progress.setAttribute('aria-valuenow', p);
+  progress.setAttribute('style', `width: ${p}%`);
 };
 
 const wait = ms => {
@@ -141,6 +152,7 @@ const wait = ms => {
 window.onload = function() {
   block = [document.getElementsByClassName('none')[0], document.getElementsByClassName('square')[0], document.getElementsByClassName('circle')[0]];
   arrow = [document.getElementsByClassName('top')[0], document.getElementsByClassName('right')[0], document.getElementsByClassName('bottom')[0], document.getElementsByClassName('left')[0]];
+  progress = document.getElementById('progress-bar');
 
   modal = document.getElementById('modal');
   const modalBtn = document.getElementById('modal-btn');
