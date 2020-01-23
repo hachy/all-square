@@ -54,6 +54,7 @@ const start = i => {
   percent();
   createBoard();
   showBoard();
+  addFlipEvent();
 };
 
 const stageBtns = i => {
@@ -114,6 +115,28 @@ const showBoard = () => {
           cell.appendChild(left);
         }
       }
+
+      // add data-canFlip
+      if (x === current[0] - 1 && y === current[1] && prevKey != 38) {
+        cell.dataset.canFlip = 'top';
+        cell.dataset.x = current[0] - 1;
+        cell.dataset.y = current[1];
+      }
+      if (x === current[0] && y === current[1] + 1 && prevKey != 39) {
+        cell.dataset.canFlip = 'right';
+        cell.dataset.x = current[0];
+        cell.dataset.y = current[1] + 1;
+      }
+      if (x === current[0] + 1 && y === current[1] && prevKey != 40) {
+        cell.dataset.canFlip = 'bottom';
+        cell.dataset.x = current[0] + 1;
+        cell.dataset.y = current[1];
+      }
+      if (x === current[0] && y === current[1] - 1 && prevKey != 37) {
+        cell.dataset.canFlip = 'left';
+        cell.dataset.x = current[0];
+        cell.dataset.y = current[1] - 1;
+      }
     }
   }
 
@@ -125,6 +148,43 @@ const showBoard = () => {
       start(parseInt(localStorage.getItem('all-square-level')) + 1);
     })();
   }
+};
+
+const addFlipEvent = () => {
+  const ab = document.getElementsByClassName('active-block');
+  Array.prototype.forEach.call(ab, el => {
+    if (el.dataset.canFlip === 'top') {
+      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 40));
+    }
+    if (el.dataset.canFlip === 'right') {
+      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 37));
+    }
+    if (el.dataset.canFlip === 'bottom') {
+      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 38));
+    }
+    if (el.dataset.canFlip === 'left') {
+      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 39));
+    }
+  });
+};
+
+const flip = (x, y, pk) => {
+  const _x = parseInt(x);
+  const _y = parseInt(y);
+  prevKey = pk;
+  if (pk === 40) {
+    current[0]--;
+  } else if (pk === 37) {
+    current[1]++;
+  } else if (pk === 38) {
+    current[0]++;
+  } else if (pk === 39) {
+    current[1]--;
+  }
+  board[_x][_y] = 3 - board[_x][_y];
+  countMove();
+  showBoard();
+  addFlipEvent();
 };
 
 const countMove = () => {
@@ -201,5 +261,6 @@ window.onload = function() {
       countMove();
     }
     showBoard();
+    addFlipEvent();
   });
 };
