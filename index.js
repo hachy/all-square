@@ -97,45 +97,46 @@ const showBoard = () => {
       const cell = block[board[x][y]].cloneNode(true);
       b.appendChild(cell);
 
-      if (x == current[0] && y == current[1]) {
-        if (current[0] - 1 >= 0 && prevKey != 38 && board[x - 1][y] != 0) {
+      // add arrow + data-canFlip
+      if (y === current[1]) {
+        const tx = current[0] - 1;
+        const dx = current[0] + 1;
+        // top
+        if (x === tx && prevKey != 38 && board[tx][y] != 0) {
           const top = arrow[0].cloneNode(true);
           cell.appendChild(top);
+          cell.dataset.canFlip = 'top';
+          cell.dataset.x = tx;
+          cell.dataset.y = current[1];
         }
-        if (current[1] + 1 <= yMax && prevKey != 39 && board[x][y + 1] != 0) {
-          const right = arrow[1].cloneNode(true);
-          cell.appendChild(right);
-        }
-        if (current[0] + 1 <= xMax && prevKey != 40 && board[x + 1][y] != 0) {
+        // down
+        if (x === dx && prevKey != 40 && board[dx][y] != 0) {
           const bottom = arrow[2].cloneNode(true);
           cell.appendChild(bottom);
+          cell.dataset.canFlip = 'bottom';
+          cell.dataset.x = dx;
+          cell.dataset.y = current[1];
         }
-        if (current[1] - 1 >= 0 && prevKey != 37 && board[x][y - 1] != 0) {
+      }
+      if (x === current[0]) {
+        const ry = current[1] + 1;
+        const ly = current[1] - 1;
+        // right
+        if (y === ry && prevKey != 39 && board[x][ry] != 0) {
+          const right = arrow[1].cloneNode(true);
+          cell.appendChild(right);
+          cell.dataset.canFlip = 'right';
+          cell.dataset.x = current[0];
+          cell.dataset.y = ry;
+        }
+        // left
+        if (y === ly && prevKey != 37 && board[x][ly] != 0) {
           const left = arrow[3].cloneNode(true);
           cell.appendChild(left);
+          cell.dataset.canFlip = 'left';
+          cell.dataset.x = current[0];
+          cell.dataset.y = ly;
         }
-      }
-
-      // add data-canFlip
-      if (x === current[0] - 1 && y === current[1] && prevKey != 38) {
-        cell.dataset.canFlip = 'top';
-        cell.dataset.x = current[0] - 1;
-        cell.dataset.y = current[1];
-      }
-      if (x === current[0] && y === current[1] + 1 && prevKey != 39) {
-        cell.dataset.canFlip = 'right';
-        cell.dataset.x = current[0];
-        cell.dataset.y = current[1] + 1;
-      }
-      if (x === current[0] + 1 && y === current[1] && prevKey != 40) {
-        cell.dataset.canFlip = 'bottom';
-        cell.dataset.x = current[0] + 1;
-        cell.dataset.y = current[1];
-      }
-      if (x === current[0] && y === current[1] - 1 && prevKey != 37) {
-        cell.dataset.canFlip = 'left';
-        cell.dataset.x = current[0];
-        cell.dataset.y = current[1] - 1;
       }
     }
   }
