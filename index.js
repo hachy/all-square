@@ -307,16 +307,16 @@ const addFlipEvent = () => {
   const ab = document.getElementsByClassName('active-block');
   Array.prototype.forEach.call(ab, el => {
     if (el.dataset.canFlip === 'top') {
-      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 40));
+      el.addEventListener('mousedown', flip.bind(this, el.dataset.x, el.dataset.y, 40));
     }
     if (el.dataset.canFlip === 'right') {
-      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 37));
+      el.addEventListener('mousedown', flip.bind(this, el.dataset.x, el.dataset.y, 37));
     }
     if (el.dataset.canFlip === 'bottom') {
-      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 38));
+      el.addEventListener('mousedown', flip.bind(this, el.dataset.x, el.dataset.y, 38));
     }
     if (el.dataset.canFlip === 'left') {
-      el.addEventListener('mousemove', flip.bind(this, el.dataset.x, el.dataset.y, 39));
+      el.addEventListener('mousedown', flip.bind(this, el.dataset.x, el.dataset.y, 39));
     }
   });
 };
