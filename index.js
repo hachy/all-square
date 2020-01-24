@@ -175,7 +175,7 @@ const data = [
   },
 ];
 
-const board = [];
+let board = [];
 let stage;
 let current;
 let moveTxt;
@@ -250,6 +250,7 @@ const stageBtns = i => {
 };
 
 const createBoard = () => {
+  board = [];
   for (let i = 0; i < xLen; i++) {
     board[i] = [];
     for (let j = 0; j < yLen; j++) {
@@ -393,7 +394,7 @@ window.onload = function() {
   const modalBtn = document.getElementById('modal-btn');
   modalBtn.addEventListener('click', () => {
     modal.classList.remove('show');
-    start(localStorage.getItem('all-square-level'));
+    start(parseInt(localStorage.getItem('all-square-level')));
   });
 
   if (!localStorage.getItem('all-square-level-max')) {
@@ -401,7 +402,7 @@ window.onload = function() {
     localStorage['all-square-level-max'] = 0;
     start(0);
   } else {
-    start(localStorage.getItem('all-square-level'));
+    start(parseInt(localStorage.getItem('all-square-level')));
   }
 
   document.addEventListener('keydown', e => {
