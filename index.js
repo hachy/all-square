@@ -11,6 +11,8 @@ const data = [
   },
 ];
 
+const bg = ['#93d9fb', '#b9f736', '#fbb593', '#b593fb', '#627cf9', '#d06ba4', '#44c47c', '#f48ef9', '#fcf029', '#fc666f', '#fc9b4d', '#666ffc', '#8cf904', '#4daefc'];
+
 const board = [];
 let stage;
 let current;
@@ -50,11 +52,17 @@ const start = i => {
   yMax = yLen - 1;
   prevKey = null;
   blockMax = stage.flat().filter(e => e != 0).length;
+  changeColor();
   stageBtns(i);
   percent();
   createBoard();
   showBoard();
   addFlipEvent();
+};
+
+const changeColor = () => {
+  const color = Math.floor(Math.random() * Math.floor(bg.length));
+  block[1].style.background = bg[color];
 };
 
 const stageBtns = i => {
