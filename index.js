@@ -117,19 +117,19 @@ const data = [
     stage: [[2, 2, 2, 2, 2, 2], [2, 2, 2, 2, 0, 2], [2, 2, 2, 0, 2, 1], [2, 2, 0, 1, 2, 2], [2, 0, 2, 1, 2, 2], [2, 1, 2, 2, 2, 2]],
     current: [5, 0],
     move: 95,
-    color: '#4a2afd',
+    color: '#c178b8',
   },
   {
     stage: [[0, 1, 2, 2, 2, 0], [1, 2, 1, 2, 2, 2], [2, 1, 0, 2, 1, 2], [2, 2, 2, 1, 2, 2], [1, 2, 2, 2, 0, 2], [0, 1, 2, 2, 1, 2]],
     current: [1, 1],
     move: 50,
-    color: '#d06ba4',
+    color: '#8cf904',
   },
   {
     stage: [[2, 2, 0, 2, 2, 2], [2, 2, 2, 2, 2, 2], [1, 2, 0, 2, 1, 0], [0, 2, 2, 0, 2, 1], [1, 2, 1, 2, 2, 2], [2, 2, 2, 0, 2, 2]],
     current: [3, 2],
     move: 70,
-    color: '#8cf904',
+    color: '#d06ba4',
   },
   {
     stage: [[2, 2, 1, 2, 2, 0], [2, 0, 1, 2, 2, 2], [2, 2, 2, 0, 2, 1], [2, 1, 0, 2, 2, 1], [2, 2, 2, 1, 0, 2], [0, 2, 2, 2, 2, 2]],
@@ -239,6 +239,7 @@ const stageBtns = i => {
 
     if (parseInt(i) === j) {
       btn.classList.add('current');
+      btn.style.border = `2px solid ${data[i].color}`;
     }
 
     if (j <= parseInt(localStorage.getItem('all-square-level-max'))) {
