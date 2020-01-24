@@ -1,5 +1,11 @@
 const data = [
   {
+    stage: [[2, 2], [2, 2], [2, 0], [1, 0]],
+    current: [3, 0],
+    move: 5,
+    color: '#7955ed',
+  },
+  {
     stage: [[2, 2, 2], [2, 1, 2], [2, 2, 2]],
     current: [1, 1],
     move: 20,
