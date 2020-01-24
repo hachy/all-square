@@ -66,20 +66,29 @@ const changeColor = () => {
 };
 
 const stageBtns = i => {
-  const btns = document.getElementsByClassName('btn');
+  const btns = document.getElementById('stage-btns');
+  const template = document.getElementById('stage-btn-template');
 
-  // highlight current btn
-  Array.prototype.forEach.call(btns, (el, idx) => {
-    el.classList.remove('current');
-    // add click listener
-    el.addEventListener('click', start.bind(this, idx));
-  });
-  btns[i].classList.add('current');
+  while (btns.firstChild) {
+    btns.removeChild(btns.firstChild);
+  }
 
-  // btn disabled
-  const l = parseInt(localStorage.getItem('all-square-level-max')) + 1;
-  for (let j = 0; j < l; j++) {
-    btns[j].disabled = false;
+  for (let j = 0; j < data.length; j++) {
+    const clone = document.importNode(template.content, true);
+    const btn = clone.querySelector('button');
+
+    btn.textContent = j + 1;
+    btn.addEventListener('click', start.bind(this, j));
+
+    if (parseInt(i) === j) {
+      btn.classList.add('current');
+    }
+
+    if (j <= parseInt(localStorage.getItem('all-square-level-max'))) {
+      btn.disabled = false;
+    }
+
+    btns.appendChild(clone);
   }
 };
 
