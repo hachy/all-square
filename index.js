@@ -323,12 +323,18 @@ const showBoard = () => {
     }
   }
 
+  // next stage
   if (blockMax === board.flat().filter(e => e === 1).length) {
+    const c = parseInt(localStorage.getItem('all-square-level')) + 1;
     (async () => {
       gameover = true;
       b.classList.add('fadeOut');
       await wait(1300);
-      start(parseInt(localStorage.getItem('all-square-level')) + 1);
+      if (c >= data.length) {
+        console.info('Thank you for playing!');
+      } else {
+        start(c);
+      }
     })();
   }
 };
