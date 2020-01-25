@@ -222,7 +222,7 @@ const start = i => {
   blockMax = stage.flat().filter(e => e != 0).length;
   block[1].style.background = data[i].color;
   stageBtns(i);
-  percent();
+  percent(true);
   createBoard();
   showBoard();
   addFlipEvent();
@@ -382,10 +382,21 @@ const countMove = () => {
   moveTxt.textContent = move;
 };
 
-const percent = () => {
-  let p = Math.floor((move / moveMax) * 100);
-  progress.setAttribute('aria-valuenow', p);
-  progress.setAttribute('style', `width: ${p}%`);
+const percent = (first = false) => {
+  if (first) {
+    (async () => {
+      progress.setAttribute('aria-valuenow', 0);
+      progress.setAttribute('style', 'width: 0%');
+      progress.style.transition = 'none';
+      await wait(100);
+      progress.setAttribute('aria-valuenow', 100);
+      progress.setAttribute('style', 'width: 100%');
+    })();
+  } else {
+    let p = Math.floor((move / moveMax) * 100);
+    progress.setAttribute('aria-valuenow', p);
+    progress.setAttribute('style', `width: ${p}%`);
+  }
 };
 
 const wait = ms => {
