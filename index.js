@@ -409,6 +409,11 @@ const wait = ms => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
+const modalClose = () => {
+  modal.classList.remove('show');
+  start(parseInt(localStorage.getItem('all-square-level')));
+};
+
 window.onload = function() {
   block = [document.getElementsByClassName('none')[0], document.getElementsByClassName('square')[0], document.getElementsByClassName('circle')[0]];
   arrow = [document.getElementsByClassName('top')[0], document.getElementsByClassName('right')[0], document.getElementsByClassName('bottom')[0], document.getElementsByClassName('left')[0]];
@@ -417,8 +422,7 @@ window.onload = function() {
   modal = document.getElementById('modal');
   const modalBtn = document.getElementById('modal-btn');
   modalBtn.addEventListener('click', () => {
-    modal.classList.remove('show');
-    start(parseInt(localStorage.getItem('all-square-level')));
+    modalClose();
   });
 
   if (!localStorage.getItem('all-square-level-max')) {
@@ -436,6 +440,9 @@ window.onload = function() {
 
     if (gameover) {
       e.preventDefault();
+      if (k === 32) {
+        modalClose();
+      }
       return;
     }
 
