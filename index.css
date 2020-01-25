@@ -27,8 +27,9 @@ h1 {
   display: grid;
   grid-template-areas:
     'info nav'
-    'board-wrapper nav';
-  grid-template-rows: auto 1fr;
+    'board-wrapper nav'
+    'footer nav';
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr auto;
   min-height: 100vh;
 }
@@ -137,6 +138,12 @@ button:not(:disabled),
 
 #board.fadeOut {
   animation: fadeOut 1s forwards;
+}
+
+#footer {
+  grid-area: footer;
+  margin: 10px;
+  text-align: center;
 }
 
 @keyframes fadeOut {
@@ -357,8 +364,9 @@ button:not(:disabled),
     grid-template-areas:
       'info'
       'board-wrapper'
-      'nav';
-    grid-template-rows: auto 1fr auto;
+      'nav'
+      'footer';
+    grid-template-rows: auto 1fr auto auto;
     grid-template-columns: 1fr;
   }
 
