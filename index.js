@@ -269,7 +269,7 @@ const createBoard = () => {
 const showBoard = () => {
   const b = document.getElementById('board');
   b.classList.remove('fadeOut');
-  b.style.width = 70 * yLen + 6 * 2 * yLen + 'px';
+  b.style.width = 60 * yLen + 6 * 2 * yLen + 'px';
   while (b.firstChild) {
     b.removeChild(b.firstChild);
   }
