@@ -10,15 +10,23 @@
   </head>
   <body>
     <div style="display:none">
-      <div class="square active-block"></div>
-      <div class="circle active-block"></div>
-      <div class="none"></div>
-
       <div class="top"></div>
       <div class="right"></div>
       <div class="bottom"></div>
       <div class="left"></div>
     </div>
+
+    <template id="none-template">
+      <div class="none"></div>
+    </template>
+
+    <template id="square-template">
+      <div class="square active-block"></div>
+    </template>
+
+    <template id="circle-template">
+      <div class="circle active-block"></div>
+    </template>
 
     <template id="stage-btn-template">
       <button class="btn" type="button" disabled></button>

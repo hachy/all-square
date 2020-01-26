@@ -192,7 +192,6 @@ let yLe;
 let xMax;
 let yMax;
 let prevKey;
-let block;
 let arrow;
 let progress;
 let modal;
@@ -220,7 +219,6 @@ const start = i => {
   yMax = yLen - 1;
   prevKey = null;
   blockMax = stage.flat().filter(e => e != 0).length;
-  block[1].style.background = data[i].color;
   stageBtns(i);
   percent(true);
   createBoard();
@@ -274,12 +272,19 @@ const showBoard = () => {
     b.removeChild(b.firstChild);
   }
 
+  const block = [document.getElementById('none-template'), document.getElementById('square-template'), document.getElementById('circle-template')];
+  const cs = localStorage['all-square-level'];
+
   for (let x = 0; x < xLen; x++) {
     for (let y = 0; y < yLen; y++) {
-      const cell = block[board[x][y]].cloneNode(true);
-      b.appendChild(cell);
+      const clone = document.importNode(block[board[x][y]].content, true);
+      let s = clone.querySelector('.square');
+      if (s != null) {
+        s.style.background = data[cs].color;
+      }
 
       // add arrow + data-canFlip
+      let cell = clone.querySelector('div');
       if (y === current[1]) {
         const tx = current[0] - 1;
         const dx = current[0] + 1;
@@ -320,6 +325,7 @@ const showBoard = () => {
           cell.dataset.y = ly;
         }
       }
+      b.appendChild(cell);
     }
   }
 
@@ -415,7 +421,6 @@ const modalClose = () => {
 };
 
 window.onload = function() {
-  block = [document.getElementsByClassName('none')[0], document.getElementsByClassName('square')[0], document.getElementsByClassName('circle')[0]];
   arrow = [document.getElementsByClassName('top')[0], document.getElementsByClassName('right')[0], document.getElementsByClassName('bottom')[0], document.getElementsByClassName('left')[0]];
   progress = document.getElementById('progress-bar');
 
