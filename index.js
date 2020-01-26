@@ -267,7 +267,6 @@ const createBoard = () => {
 const showBoard = () => {
   const b = document.getElementById('board');
   b.classList.remove('fadeOut');
-  b.style.width = 60 * yLen + 6 * 2 * yLen + 'px';
   while (b.firstChild) {
     b.removeChild(b.firstChild);
   }
@@ -328,6 +327,9 @@ const showBoard = () => {
       b.appendChild(cell);
     }
   }
+
+  let w = document.getElementsByClassName('active-block')[0].offsetWidth;
+  b.style.width = w * yLen + 6 * 2 * yLen + 'px';
 
   // next stage
   if (blockMax === board.flat().filter(e => e === 1).length) {
