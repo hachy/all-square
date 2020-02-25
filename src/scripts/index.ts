@@ -18,7 +18,7 @@ let gameover: boolean;
 let blockMax: number;
 
 const start = (i: number): void => {
-  if (i > localStorage.getItem('all-square-level-max')) {
+  if (i > parseInt(localStorage.getItem('all-square-level-max') as string)) {
     localStorage['all-square-level-max'] = i;
   }
   localStorage['all-square-level'] = i;
@@ -65,7 +65,7 @@ const stageBtns = (i: number): void => {
       btn.style.border = `2px solid ${data[i].color}`;
     }
 
-    if (j <= parseInt(localStorage.getItem('all-square-level-max'))) {
+    if (j <= parseInt(localStorage.getItem('all-square-level-max') as string)) {
       btn.disabled = false;
     }
 
@@ -178,7 +178,7 @@ const showBoard = (): void => {
 
   // next stage
   if (blockMax === board.flat().filter(e => e === 1).length) {
-    const c = parseInt(localStorage.getItem('all-square-level')) + 1;
+    const c = parseInt(localStorage.getItem('all-square-level') as string) + 1;
     (async (): Promise<void> => {
       gameover = true;
       b.classList.add('fadeOut');
@@ -242,7 +242,7 @@ const flip = (x: number, y: number, pk: number): void => {
 
 const modalClose = (): void => {
   modal.classList.remove('show');
-  start(parseInt(localStorage.getItem('all-square-level')));
+  start(parseInt(localStorage.getItem('all-square-level') as string));
 };
 
 window.onload = (): void => {
@@ -265,7 +265,7 @@ window.onload = (): void => {
     localStorage['all-square-level-max'] = 0;
     start(0);
   } else {
-    start(parseInt(localStorage.getItem('all-square-level')));
+    start(parseInt(localStorage.getItem('all-square-level') as string));
   }
 
   document.addEventListener('keydown', e => {
