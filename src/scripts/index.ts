@@ -6,7 +6,7 @@ const game = new Game();
 
 const modalClose = (): void => {
   Modal.close();
-  Game.start(parseInt(localStorage.getItem('all-square-level') as string));
+  game.start(parseInt(localStorage.getItem('all-square-level') as string));
 };
 
 const modal = new Modal();
@@ -15,9 +15,9 @@ modal.btn.addEventListener('click', () => modalClose());
 if (!localStorage.getItem('all-square-level-max')) {
   localStorage['all-square-level'] = 0;
   localStorage['all-square-level-max'] = 0;
-  Game.start(0);
+  game.start(0);
 } else {
-  Game.start(parseInt(localStorage.getItem('all-square-level') as string));
+  game.start(parseInt(localStorage.getItem('all-square-level') as string));
 }
 
 document.addEventListener('keydown', e => {
@@ -33,13 +33,13 @@ document.addEventListener('keydown', e => {
     return;
   }
 
-  if (k === 38 && cx > 0 && Global.prevKey !== 38 && Game.board[cx - 1][cy] !== 0) {
-    Game.flip(cx - 1, cy, 40);
-  } else if (k === 39 && cy < Global.yMax && Global.prevKey !== 39 && Game.board[cx][cy + 1] !== 0) {
-    Game.flip(cx, cy + 1, 37);
-  } else if (k === 40 && cx < Global.xMax && Global.prevKey !== 40 && Game.board[cx + 1][cy] !== 0) {
-    Game.flip(cx + 1, cy, 38);
-  } else if (k === 37 && cy > 0 && Global.prevKey !== 37 && Game.board[cx][cy - 1] !== 0) {
-    Game.flip(cx, cy - 1, 39);
+  if (k === 38 && cx > 0 && Global.prevKey !== 38 && Global.board[cx - 1][cy] !== 0) {
+    game.flip(cx - 1, cy, 40);
+  } else if (k === 39 && cy < Global.yMax && Global.prevKey !== 39 && Global.board[cx][cy + 1] !== 0) {
+    game.flip(cx, cy + 1, 37);
+  } else if (k === 40 && cx < Global.xMax && Global.prevKey !== 40 && Global.board[cx + 1][cy] !== 0) {
+    game.flip(cx + 1, cy, 38);
+  } else if (k === 37 && cy > 0 && Global.prevKey !== 37 && Global.board[cx][cy - 1] !== 0) {
+    game.flip(cx, cy - 1, 39);
   }
 });

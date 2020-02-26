@@ -4,15 +4,27 @@ import { Info } from './info';
 import { wait } from './util';
 
 export class Game {
-  static board: number[][] = [];
-  static stage: number[][];
-  static xLen: number;
-  static yLen: number;
-  static blockMax: number;
-  static arrow: HTMLDivElement[];
+  stage!: number[][];
+  xLen!: number;
+  yLen!: number;
+  blockMax!: number;
+
+  btns: HTMLDivElement;
+  template: HTMLTemplateElement;
+  boardEl: HTMLDivElement;
+  block: HTMLTemplateElement[];
+  arrow: HTMLDivElement[];
 
   constructor() {
-    Game.arrow = [
+    this.btns = document.getElementById('stage-btns') as HTMLDivElement;
+    this.template = document.getElementById('stage-btn-template') as HTMLTemplateElement;
+    this.boardEl = document.getElementById('board') as HTMLDivElement;
+    this.block = [
+      document.getElementById('none-template') as HTMLTemplateElement,
+      document.getElementById('square-template') as HTMLTemplateElement,
+      document.getElementById('circle-template') as HTMLTemplateElement
+    ];
+    this.arrow = [
       document.getElementsByClassName('top')[0] as HTMLDivElement,
       document.getElementsByClassName('right')[0] as HTMLDivElement,
       document.getElementsByClassName('bottom')[0] as HTMLDivElement,
@@ -20,20 +32,17 @@ export class Game {
     ];
   }
 
-  static createNav(i: number): void {
-    const btns = document.getElementById('stage-btns') as HTMLDivElement;
-    const template = document.getElementById('stage-btn-template') as HTMLTemplateElement;
-
-    while (btns.firstChild) {
-      btns.removeChild(btns.firstChild);
+  createNav(i: number): void {
+    while (this.btns.firstChild) {
+      this.btns.removeChild(this.btns.firstChild);
     }
 
     for (let j = 0; j < data.length; j++) {
-      const clone = document.importNode(template.content, true);
+      const clone = document.importNode(this.template.content, true);
       const btn = clone.querySelector('button') as HTMLButtonElement;
 
       btn.textContent = `${j + 1}`;
-      btn.addEventListener('click', Game.start.bind(this, j));
+      btn.addEventListener('click', this.start.bind(this, j));
 
       if (i === j) {
         btn.classList.add('current');
@@ -44,37 +53,31 @@ export class Game {
         btn.disabled = false;
       }
 
-      btns.appendChild(clone);
+      this.btns.appendChild(clone);
     }
   }
 
-  static createBoard(): void {
-    this.board = [];
-    for (let i = 0; i < Game.xLen; i++) {
-      this.board[i] = [];
-      for (let j = 0; j < Game.yLen; j++) {
-        this.board[i][j] = Game.stage[i][j];
+  createBoard(): void {
+    Global.board = [];
+    for (let i = 0; i < this.xLen; i++) {
+      Global.board[i] = [];
+      for (let j = 0; j < this.yLen; j++) {
+        Global.board[i][j] = this.stage[i][j];
       }
     }
   }
 
-  static showBoard(): void {
-    const b = document.getElementById('board') as HTMLDivElement;
-    b.classList.remove('fadeOut');
-    while (b.firstChild) {
-      b.removeChild(b.firstChild);
+  showBoard(): void {
+    this.boardEl.classList.remove('fadeOut');
+    while (this.boardEl.firstChild) {
+      this.boardEl.removeChild(this.boardEl.firstChild);
     }
 
-    const block = [
-      document.getElementById('none-template') as HTMLTemplateElement,
-      document.getElementById('square-template') as HTMLTemplateElement,
-      document.getElementById('circle-template') as HTMLTemplateElement
-    ];
     const cs = localStorage['all-square-level'];
 
     for (let x = 0; x < this.xLen; x++) {
       for (let y = 0; y < this.yLen; y++) {
-        const clone = document.importNode(block[this.board[x][y]].content, true);
+        const clone = document.importNode(this.block[Global.board[x][y]].content, true);
         const s = clone.querySelector('.square') as HTMLDivElement;
         if (s != null) {
           s.style.background = data[cs].color;
@@ -86,7 +89,7 @@ export class Game {
           const tx = Global.current[0] - 1;
           const dx = Global.current[0] + 1;
           // top
-          if (x === tx && Global.prevKey !== 38 && this.board[tx][y] !== 0) {
+          if (x === tx && Global.prevKey !== 38 && Global.board[tx][y] !== 0) {
             const top = this.arrow[0].cloneNode(true);
             cell.appendChild(top);
             cell.dataset.canFlip = 'top';
@@ -94,7 +97,7 @@ export class Game {
             cell.dataset.y = `${Global.current[1]}`;
           }
           // down
-          if (x === dx && Global.prevKey !== 40 && this.board[dx][y] !== 0) {
+          if (x === dx && Global.prevKey !== 40 && Global.board[dx][y] !== 0) {
             const bottom = this.arrow[2].cloneNode(true);
             cell.appendChild(bottom);
             cell.dataset.canFlip = 'bottom';
@@ -106,7 +109,7 @@ export class Game {
           const ry = Global.current[1] + 1;
           const ly = Global.current[1] - 1;
           // right
-          if (y === ry && Global.prevKey !== 39 && this.board[x][ry] !== 0) {
+          if (y === ry && Global.prevKey !== 39 && Global.board[x][ry] !== 0) {
             const right = this.arrow[1].cloneNode(true);
             cell.appendChild(right);
             cell.dataset.canFlip = 'right';
@@ -114,7 +117,7 @@ export class Game {
             cell.dataset.y = `${ry}`;
           }
           // left
-          if (y === ly && Global.prevKey !== 37 && this.board[x][ly] !== 0) {
+          if (y === ly && Global.prevKey !== 37 && Global.board[x][ly] !== 0) {
             const left = this.arrow[3].cloneNode(true);
             cell.appendChild(left);
             cell.dataset.canFlip = 'left';
@@ -122,31 +125,31 @@ export class Game {
             cell.dataset.y = `${ly}`;
           }
         }
-        b.appendChild(cell);
+        this.boardEl.appendChild(cell);
       }
     }
 
     const w = document.getElementsByClassName('active-block')[0] as HTMLDivElement;
     const ow = w.offsetWidth;
-    b.style.width = `${ow * this.yLen + 6 * 2 * this.yLen}px`;
+    this.boardEl.style.width = `${ow * this.yLen + 6 * 2 * this.yLen}px`;
 
     // next stage
-    if (this.blockMax === this.board.flat().filter((e: number) => e === 1).length) {
+    if (this.blockMax === Global.board.flat().filter((e: number) => e === 1).length) {
       const c = parseInt(localStorage.getItem('all-square-level') as string) + 1;
       (async (): Promise<void> => {
         Global.gameOver = true;
-        b.classList.add('fadeOut');
+        this.boardEl.classList.add('fadeOut');
         await wait(1300);
         if (c >= data.length) {
           console.info('Thank you for playing!');
         } else {
-          Game.start(c);
+          this.start(c);
         }
       })();
     }
   }
 
-  static flip(x: number, y: number, pk: number): void {
+  flip(x: number, y: number, pk: number): void {
     const cx = x;
     const cy = y;
     Global.prevKey = pk;
@@ -159,12 +162,12 @@ export class Game {
     } else if (pk === 39) {
       Global.current[1]--;
     }
-    this.board[cx][cy] = 3 - this.board[cx][cy];
+    Global.board[cx][cy] = 3 - Global.board[cx][cy];
     Info.countMove();
     this.showBoard();
   }
 
-  static addFlipEvent(): void {
+  addFlipEvent(): void {
     const ab = document.getElementsByClassName('active-block');
     Array.prototype.forEach.call(ab, el => {
       if (el.dataset.canFlip === 'top') {
@@ -182,7 +185,7 @@ export class Game {
     });
   }
 
-  static start(i: number): void {
+  start(i: number): void {
     if (i > parseInt(localStorage.getItem('all-square-level-max') as string)) {
       localStorage['all-square-level-max'] = i;
     }
