@@ -165,6 +165,7 @@ export class Game {
     Global.board[cx][cy] = 3 - Global.board[cx][cy];
     Info.countMove();
     this.showBoard();
+    this.addFlipEvent();
   }
 
   addFlipEvent(): void {
