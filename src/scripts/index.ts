@@ -20,6 +20,11 @@ if (!localStorage.getItem('all-square-level-max')) {
   game.start(parseInt(localStorage.getItem('all-square-level') as string));
 }
 
+const restart = document.getElementById('restartBtn') as HTMLButtonElement;
+restart.addEventListener('click', () => {
+  game.start(parseInt(localStorage.getItem('all-square-level') as string));
+});
+
 document.addEventListener('keydown', e => {
   const k = e.keyCode;
   const cx = Global.current[0];

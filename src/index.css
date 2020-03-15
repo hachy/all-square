@@ -46,8 +46,14 @@ h1 {
 }
 
 .info {
+  display: flex;
   grid-area: info;
+  align-items: center;
   margin: 10px;
+}
+
+#status {
+  flex-grow: 1;
 }
 
 .info-txt {
@@ -86,6 +92,21 @@ h1 {
   white-space: nowrap;
   background-color: #0373fc;
   transition: width 0.5s linear;
+}
+
+#restartBtn {
+  margin: 0 10px;
+  padding: 10px 20px;
+  color: #fff;
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+#restartBtn:hover {
+  color: #000;
+  background: #fff;
 }
 
 .nav {

@@ -33,12 +33,17 @@
 
     <div class="container">
       <div class="info">
-        <div><span class="info-txt">stage</span><span id="stage"></span></div>
-        <div class="move-wrapper">
-          <span class="info-txt">move</span><span id="move"></span>
-          <div class="progress">
-            <div id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <div id="status">
+          <span class="info-txt">stage</span><span id="stage"></span>
+          <div class="move-wrapper">
+            <span class="info-txt">move</span><span id="move"></span>
+            <div class="progress">
+              <div id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
           </div>
+        </div>
+        <div id="restart">
+          <button id="restartBtn">RESTART</button>
         </div>
       </div>
 
@@ -69,5 +74,4 @@
 
     <script src="scripts/index.ts"></script>
   </body>
-</html>
 </html>
